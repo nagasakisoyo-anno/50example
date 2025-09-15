@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆界面</title>
+    <link rel="stylesheet" href="login.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+    <div class="box">
+        <div class="pre-box">
+            <h1>WELCOM</h1>
+            <p>JOIN US!</p>
+            <div class="img-box">
+                <img src="img/soyo.jpg" alt="">
+            </div>
+        </div>
+        <div class="register-form">
+            <div class="title-box">
+                <h1>注册</h1>
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="用户名">
+                <input type="text" placeholder="密码">
+                <input type="text" placeholder="确认密码">
+            </div>
+            <div class="btn-box">
+                <button>注册</button>
+                <p onclick="myswitch()">已经有账号？前往登录</p>
+            </div>
+
+        </div>
+        <div class="login-form">
+            <div class="title-box">
+                <h1>登录</h1>
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="用户名">
+                <input type="text" placeholder="密码">
+            </div>
+            <div class="btn-box">
+                <button>登录</button>
+                <p onclick="myswitch()">没有账号？前往注册</p>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        let flag=true;
+        const myswitch=()=>{
+            if(flag){
+                $(".pre-box").css("transform","translateX(100%)")
+                 $(".pre-box").css("background-color","#A0A0FB")
+                  $("img").attr("src","./img/soyoxiu.jpg")
+            }else{
+                      $(".pre-box").css("transform","translateX(0%)")
+                 $(".pre-box").css("background-color","#97B8FC")
+                  $("img").attr("src","./img/soyo.jpg")
+
+            }
+            flag=!flag;
+        }
+    </script>
+</body>
+</html>
