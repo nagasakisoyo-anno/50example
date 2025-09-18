@@ -1,0 +1,104 @@
+    <script>
+        let flag = true;
+        const myswitch = () => {
+            // 清除错误消息
+            document.getElementById('registerError').textContent = '';
+            document.getElementById('loginError').textContent = '';
+            
+            if (flag) {
+                $(".pre-box").css("transform", "translateX(100%)")
+                $(".pre-box").css("background-color", "#A0A0FB")
+                $("img").attr("src", "./img/soyoxiu.jpg")
+            } else {
+                $(".pre-box").css("transform", "translateX(0%)")
+                $(".pre-box").css("background-color", "#97B8FC")
+                $("img").attr("src", "./img/soyo.jpg")
+            }
+            flag = !flag;
+        }
+
+        // 注册功能
+        function register() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const errorElement = document.getElementById('registerError');
+
+            // 前端验证
+            if (!username || !password || !confirmPassword) {
+                errorElement.textContent = '请填写所有字段';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorElement.textContent = '两次密码输入不一致';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorElement.textContent = '密码长度不能少于6位';
+                return;
+            }
+
+            // 发送注册请求到后端
+            $.ajax({
+                url: '/api/register',  // 后端注册接口
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    username: username,
+                    password: password
+                }),
+                success: function(response) {
+                    if (response.success) {
+                        alert('注册成功，请登录');
+                        myswitch(); // 切换到登录表单
+                    } else {
+                        errorElement.textContent = response.message || '注册失败，请重试';
+                    }
+                },
+                error: function(xhr) {
+                    const error = JSON.parse(xhr.responseText);
+                    errorElement.textContent = error.message || '服务器错误，请稍后重试';
+                }
+            });
+        }
+
+        // 登录功能
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errorElement = document.getElementById('loginError');
+
+            // 前端验证
+            if (!username || !password) {
+                errorElement.textContent = '请填写用户名和密码';
+                return;
+            }
+
+            // 发送登录请求到后端
+            $.ajax({
+                url: '/api/login',  // 后端登录接口
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    username: username,
+                    password: password
+                }),
+                success: function(response) {
+                    if (response.success) {
+                        // 登录成功，保存token并跳转到主页
+                        localStorage.setItem('token', response.token);
+                        localStorage.setItem('username', username);
+                        window.location.href = '/index.html';  // 跳转到主页
+                    } else {
+                        errorElement.textContent = response.message || '用户名或密码错误';
+                    }
+                },
+                error: function(xhr) {
+                    const error = JSON.parse(xhr.responseText);
+                    errorElement.textContent = error.message || '服务器错误，请稍后重试';
+                }
+            });
+        }
+    </script>
