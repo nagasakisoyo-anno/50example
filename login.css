@@ -133,3 +133,13 @@ button:hover{
  box-shadow: 4px 4px 3px rgba(0, 0,0, .1);
  transition: 0.5s ;
 }
+
+/* 在现有CSS基础上添加 */
+.error-message {
+    height: 20px;
+    line-height: 20px;
+    color: #ff4d4f;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
